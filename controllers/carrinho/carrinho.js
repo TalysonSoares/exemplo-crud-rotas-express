@@ -19,6 +19,7 @@ function addAoCarrinho(token, dados) {
     if(!token) {
         return false;
     }
+
     let usuario = pegarUsuarioLogado(token);
 
     let identificadores = carrinho.map(item => item.id)
@@ -37,10 +38,29 @@ function addAoCarrinho(token, dados) {
 
     //reescrevendo o arquivo
     fs.writeFileSync(__dirname+'/carrinho.json', JSON.stringify(carrinho));
+
     return novoItem;
+}
+
+function excluirItemDoCarrinho (token, id) {
+    if(!token) {
+        return 401;
+    }
+
+    let usuario = pegarUsuarioLogado(token);
+
+    //filtrando apenas os items desse usuarios logado
+    let produtos= carrinho.filter(cadaItem => {
+        return cadaItem.usuario !== parseInt(id);
+    });
+
+    fs.writeFileSync(__dirname + '/carrinho.json', JSON.stringify(produtos));
+
+    return 204;
 }
 
 module.exports = {
     buscarCarrinhoDoUsuario,
-    addAoCarrinho
+    addAoCarrinho,
+    excluirItemDoCarrinho
 }
