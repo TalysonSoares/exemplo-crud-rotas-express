@@ -9,4 +9,12 @@ router.get('/carrinho', (req, res) => {
     )
 })
 
+router.post('/carrinho', (req, res) => {
+    let token = req.headers.authorization;
+
+    res.send(
+        controller.addAoCarrinho(token, req.body)
+    )
+})
+
 module.exports = router;
