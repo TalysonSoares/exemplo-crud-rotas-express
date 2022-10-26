@@ -51,7 +51,7 @@ function excluirItemDoCarrinho (token, id) {
 
     //filtrando apenas os items desse usuarios logado
     let produtos= carrinho.filter(cadaItem => {
-        return cadaItem.usuario !== parseInt(id);
+        return cadaItem.id !== parseInt(id);
     });
 
     fs.writeFileSync(__dirname + '/carrinho.json', JSON.stringify(produtos));
